@@ -271,7 +271,13 @@ DygraphOptions.prototype.getForAxis = function(name, axis) {
  */
 DygraphOptions.prototype.getForSeries = function(name, series) {
   // Honors indexes as series.
-  if (series === this.dygraph_.getHighlightSeries()) {
+  var highlightSet_ = this.dygraph_.getHighlightSeries();
+  if(utils.isArrayLike(highlightSet_) && highlightSet_.includes(series)) {
+    if (this.highlightSeries_.hasOwnProperty(name)) {
+      return this.highlightSeries_[name];
+    }
+  }
+  else if (series === highlightSet_) {
     if (this.highlightSeries_.hasOwnProperty(name)) {
       return this.highlightSeries_[name];
     }
